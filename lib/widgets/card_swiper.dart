@@ -11,16 +11,24 @@ class CardSwiper extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: size.height * 0.5,
-      color: Colors.red,
+      //color: Colors.red,
       child: Swiper(
         itemCount: 10,
         layout: SwiperLayout.STACK,
-        itemWidth: size.width * 0.6,
-        itemHeight: size.height * 0.9,
+        itemWidth: size.width * 0.55,
+        itemHeight: size.height * 0.45,
         itemBuilder: (_, int index) {
-          return const FadeInImage(
-              placeholder: AssetImage('assets/loading.gif'),
-              image: AssetImage('assets/no-image.jpg')
+
+          return GestureDetector(
+            onTap:  () => Navigator.pushNamed(context, 'details', arguments: 'miPelicula'),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: const FadeInImage(
+                  placeholder: AssetImage('assets/loading.gif'),
+                  image: AssetImage('assets/no-image.jpg'),
+                  fit: BoxFit.cover,
+              ),
+            ),
           );
         },
       ),
