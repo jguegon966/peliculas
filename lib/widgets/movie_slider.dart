@@ -8,7 +8,7 @@ class MovieSlider extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 300,
-      color: Colors.red,
+      //color: Colors.red,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -39,21 +39,28 @@ class _MoviePoster extends StatelessWidget {
     return Container(
       width: 130,
       height: 190,
-      color: Colors.green,
+      //color: Colors.green,
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Column(
-        children: const [
-          FadeInImage(
-            placeholder: AssetImage('assets/loading.gif'), 
-            image: NetworkImage('https://via.placeholder.com/300x400'),
-            width: 130,
-            height: 190,
-            fit: BoxFit.cover,
+        children: [
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, 'details', arguments: 'miPelicula'),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: const FadeInImage(
+                placeholder: AssetImage('assets/loading.gif'), 
+                image: NetworkImage('https://via.placeholder.com/300x400'),
+                width: 130,
+                height: 190,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           
-          SizedBox( height: 5),
+          
+          const SizedBox( height: 5),
 
-          Text(
+          const Text(
             'Starwars: El retorno de el nuevo Jedi Silvestre de Monte Cristo',
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
