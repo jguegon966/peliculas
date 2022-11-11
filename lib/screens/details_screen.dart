@@ -55,7 +55,7 @@ class _CustomAppBar extends StatelessWidget {
         ),
         background: const FadeInImage(
           placeholder: AssetImage('assets/loading.gif'),
-          image: NetworkImage('https://via.placeholder.com/500x300'),
+          image: NetworkImage('https://via.placeholder.com/500x300.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -80,7 +80,7 @@ class _PosterAndTitle extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: const FadeInImage(
               placeholder: AssetImage('assets/no-image.jpg'),
-              image: NetworkImage('https://via.placeholder.com/200x300'),
+              image: NetworkImage('https://via.placeholder.com/200x300.jpg'),
               height: 150,
             ),
           ),
