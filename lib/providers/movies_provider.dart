@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:peliculas/models/now_playing_response.dart';
+import 'package:peliculas/models/popular_response.dart';
 
 import '../models/models.dart';
 
@@ -13,22 +13,43 @@ class MoviesProvider extends ChangeNotifier {
 
   List<Movie> onDisplayMovies = [];
 
+  List<Movie> popularMovies = [];
+
   MoviesProvider() {
     print('MoviesProvider inicializado');
 
-    this.getOnDisplayMovies();
+    getOnDisplayMovies();
+    getPopularMovies();
+  }
+
+  Future<String> _getJsonData(String endpoint, [int page = 1]) async {
+    var url = Uri.https(_baseUrl, endpoint, {
+      'api_key': _apiKey, 'language': _language, 'page': '1'
+    });
+
+    // Await the http get response, then decode the json-formatted response.
+    final response = await http.get(url);
   }
 
   getOnDisplayMovies() async {
-    var url = Uri.https(_baseUrl, '3/movie/now_playing',
+
+    final jsonData = await _getJsonData('3/movie/now_playing');
+
+    final nowPlayingResponse = NowPlayingResponse.fromJson(jsonData);
+
+    onDisplayMovies = nowPlayingResponse.results;
+    notifyListeners();
+  }
+
+  getPopularMovies() async {
+    var url = Uri.https(_baseUrl, '3/movie/popular',
         {'api_key': _apiKey, 'language': _language, 'page': '1'});
 
     // Await the http get response, then decode the json-formatted response.
     final response = await http.get(url);
-    final nowPlayingResponse = NowPlayingResponse.fromJson(response.body);
+    final popularResponse = PopularResponse.fromJson(response.body);
 
-    onDisplayMovies = nowPlayingResponse.results;
+    popularMovies = [...popularMovies, ...popularResponse.results];
     notifyListeners();
-    
   }
 }
