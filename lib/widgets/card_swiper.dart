@@ -2,16 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swipper/flutter_card_swiper.dart';
 import 'package:peliculas/models/movie.dart';
 
-class CardSwiper extends StatelessWidget {
+class CardSwiper extends StatefulWidget {
   const CardSwiper({super.key, required this.movies});
 
   final List<Movie> movies;
 
   @override
+  State<CardSwiper> createState() => _CardSwiperState();
+}
+
+class _CardSwiperState extends State<CardSwiper> {
+  final SwiperController swiperController = SwiperController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    swiperController.addListener(() {
+      //if (swiperController.index >= swiperController.index - 3) {
+      print('hola');
+      //}
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    if (movies.isEmpty) {
+    if (widget.movies.isEmpty) {
       return Container(
         width: double.infinity,
         height: size.height * 0.5,
@@ -26,13 +44,13 @@ class CardSwiper extends StatelessWidget {
       height: size.height * 0.5,
       //color: Colors.red,
       child: Swiper(
-        itemCount: movies.length,
+        controller: swiperController,
+        itemCount: widget.movies.length,
         layout: SwiperLayout.STACK,
         itemWidth: size.width * 0.55,
         itemHeight: size.height * 0.45,
         itemBuilder: (_, int index) {
-          final movie = movies[index];
-          print(movie.posterPath);
+          final movie = widget.movies[index];
 
           return GestureDetector(
             onTap: () =>
