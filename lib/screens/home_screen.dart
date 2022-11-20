@@ -15,6 +15,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.purpleAccent[600],
           title: const Text('Peliculas en cines'),
           elevation: 0,
           actions: [
@@ -30,7 +31,7 @@ class HomeScreen extends StatelessWidget {
 
               //Tarjetas secuendarias
               MovieSlider(
-                title: 'Populares!',
+                title: 'Peliculas populares',
                 movies: moviesProvider.popularMovies, 
                 onNextPage: () => moviesProvider.getPopularMovies(),
               ),
