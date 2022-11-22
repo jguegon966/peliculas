@@ -3,9 +3,10 @@ import 'package:flutter_card_swipper/flutter_card_swiper.dart';
 import 'package:peliculas/models/movie.dart';
 
 class CardSwiper extends StatefulWidget {
-  const CardSwiper({super.key, required this.movies});
+  const CardSwiper({super.key, required this.movies, required this.onNextPage});
 
   final List<Movie> movies;
+  final Function onNextPage;
 
   @override
   State<CardSwiper> createState() => _CardSwiperState();
@@ -13,6 +14,8 @@ class CardSwiper extends StatefulWidget {
 
 class _CardSwiperState extends State<CardSwiper> {
   final SwiperController swiperController = SwiperController();
+
+  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -44,8 +47,20 @@ class _CardSwiperState extends State<CardSwiper> {
       height: size.height * 0.5,
       //color: Colors.red,
       child: Swiper(
-        controller: swiperController,
+        loop: false,
         itemCount: widget.movies.length,
+        onIndexChanged: (int index) {
+          setState(() {
+            _currentIndex = index;
+            print(_currentIndex);
+
+            if (index == widget.movies.length - 1) {
+              widget.onNextPage();
+              setState(() {});
+            }
+          });
+        },
+        index: _currentIndex,
         layout: SwiperLayout.STACK,
         itemWidth: size.width * 0.55,
         itemHeight: size.height * 0.45,

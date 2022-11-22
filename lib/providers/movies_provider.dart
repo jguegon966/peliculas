@@ -11,6 +11,7 @@ class MoviesProvider extends ChangeNotifier {
   String _apiKey = '57b768579acb56e6c5ddb5836c5e31a6';
   String _baseUrl = 'api.themoviedb.org';
   String _language = 'es-ES';
+  int _displayPage = 1;
 
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies = [];
@@ -36,9 +37,10 @@ class MoviesProvider extends ChangeNotifier {
   }
 
   getOnDisplayMovies() async {
-    final jsonData = await _getJsonData('3/movie/now_playing');
+    _displayPage++;
+    final jsonData = await _getJsonData('3/movie/now_playing', _displayPage);
     final nowPlayingResponse = NowPlayingResponse.fromJson(jsonData);
-    onDisplayMovies = nowPlayingResponse.results;
+    onDisplayMovies = [...onDisplayMovies, ...nowPlayingResponse.results];
     notifyListeners();
   }
 
@@ -53,7 +55,6 @@ class MoviesProvider extends ChangeNotifier {
   }
 
   Future<List<Cast>> getMovieCast(int movieId) async {
-
     if (movieCast.containsKey(movieId)) return movieCast[movieId]!;
 
     print('Pidiendo info al servidor - Cast');
