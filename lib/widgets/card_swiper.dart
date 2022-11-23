@@ -61,8 +61,8 @@ class _CardSwiperState extends State<CardSwiper> {
           });
         },
         index: _currentIndex,
-        layout: SwiperLayout.STACK,
-        itemWidth: size.width * 0.55,
+        layout: SwiperLayout.TINDER,
+        itemWidth: size.width * 0.65,
         itemHeight: size.height * 0.45,
         itemBuilder: (_, int index) {
           final movie = widget.movies[index];
